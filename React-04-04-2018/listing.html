@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>List program</title>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script src="babel.min.js"></script>
+	<script type="text/babel">
+	class ProductsList extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [
+        { name: "Pen", about: "new" },
+        { name: "Pencil", about: "gfdg" },
+        { name: "Marker", about: "dfd" }
+      ]
+    };
+    this.addNew = this.addNew.bind(this);
+  }
+  addNew(e) {
+    console.log(e);
+    let prod = this.state.products;
+    //prod.push({ name: this.refs.name.value, about: "dsfdfdfgfdg" });
+    prod[1] = { name: this.refs.name.value, about: "dsfdfdfgfdg" };
+    //console.table(prod);
+    this.setState({ products: prod });
+  }
+  componentWillUpdate(nextProps) {
+    console.log(this.state.products.length);
+    console.log(nextProps.products.length);
+  }
+  render() {
+    //let products = ["Pen", "Pencil", "Marker"];
+    /*let items = [];
+				for(let index = 0, count = products.length; index < count; index++){
+					items.push(<li key={index}>{products[index]}</li>);
+				}*/
+    let items = this.state.products.map((product, index) => (
+      <li key={index}>
+        Name : {product.name}&nbsp;About : {product.about}{" "}
+      </li>
+    ));
+    return (
+      <div>
+        <h1>Products</h1>
+        <hr />
+        <label>Product Name :</label>
+        <input type="text" ref="name" />
+        <input type="button" value="Add New" onClick={this.addNew} />
+        <ol>{items}</ol>
+      </div>
+    );
+  }
+}
+ReactDOM.render(<ProductsList />, document.getElementById("root"));
+</script>
+</head>
+<body>
+
+	<div id="root"></div>
+
+</body>
+</html>
